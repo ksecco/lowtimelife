@@ -2,7 +2,7 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## What is Bitcoin?
 
-Release your high time preference conditioning at [lowtime.life](lowtime.life).
+Release your high time preference conditioning at [lowtime.life](https://www.lowtime.life).
 
 Or run the development server:
 
