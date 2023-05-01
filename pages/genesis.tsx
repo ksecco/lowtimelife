@@ -16,14 +16,32 @@ export default function Genesis() {
         "Abundance, Truth, and Love.",
     ]
 
-    const [isOpen, setIsOpen] = useState(false)
+    const [showDefinition, setshowDefinition] = useState(false)
+    const [didShowDefinition, setDidShowDefinitionModal] = useState(false)
+    const [showReferral, setshowReferral] = useState(false)
+    const [currentModalCategory, setCurrentModalCategory] = useState("btc")
 
-    function closeModal() {
-        setIsOpen(false)
+    async function closeDefinitionModal() {
+        setshowDefinition(false)
+        setDidShowDefinitionModal(true)
     }
 
-    function openModal() {
-        setIsOpen(true)
+    function openDefinitionModal() {
+        setCurrentModalCategory("btc")
+        setshowDefinition(true)
+    }
+
+    function closeReferralModal() {
+        setshowReferral(false)
+    }
+
+    function openReferralModal() {
+        setCurrentModalCategory("swan")
+        setshowReferral(true)
+    }
+
+    function navigateToSwan() {
+        window.open("https://www.swanbitcoin.com/dcabtc/")
     }
 
     function getGenesisBlock() {
@@ -32,20 +50,56 @@ export default function Genesis() {
         </p>))
     }
 
+    function getReferralBonus() {
+        const referral = [
+            ["Here persists one's first step toward self-sovereignty",
+                "Metempsychotic the right of passage should one brave the change",
+                "For though this Bitcoin yet awaits free in fiat terms",
+                "Its cost in education is nothing short of reformation.",],
+            ["All in time",
+                "One will come to embody a low time preference lifestyle",
+                "But today",
+                "Simply begin:"]
+
+        ]
+
+        return <>{referral.map(
+            (section, i) => (
+                <div key={i} className='pt-2 pb-2'>{section.map(
+                    (line, j) => (
+                        <p key={j} className="text-md text-gray-500">
+                            {line}
+                        </p>)
+                )}
+                </div>)
+        )}
+            <p className="text-md text-gray-500 pt-2 pb-2">
+                Enter your email at <a className="font-medium text-blue-900 hover:text-orange-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2" onClick={closeReferralModal} target="_blank" rel="noopener noreferrer" href="https://www.swanbitcoin.com/dcabtc/">swan.com/dcabtc</a>
+            </p>
+        </>
+    }
+
     return (
         <>
             <div className="fixed inset-0 flex items-center justify-center bg-white">
                 <button
                     type="button"
-                    onClick={openModal}
-                    className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-orange-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                    onClick={openDefinitionModal}
+                    className={!didShowDefinition ? "inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-orange-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2" : "inline-flex justify-center rounded-md border border-transparent px-4 py-2 text-sm font-medium text-blue-900 hover:text-orange-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"}
                 >
                     What is Bitcoin?
                 </button>
+                {didShowDefinition && <button
+                    type="button"
+                    onClick={openReferralModal}
+                    className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-orange-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 ml-2"
+                >
+                    Where does one begin?
+                </button>}
             </div>
 
-            <Transition appear show={isOpen} as={Fragment}>
-                <Dialog as="div" className="relative z-10" onClose={closeModal}>
+            <Transition appear show={showDefinition || showReferral} as={Fragment}>
+                <Dialog as="div" className="relative z-10" onClose={() => null}>
                     <Transition.Child
                         as={Fragment}
                         enter="ease-out duration-300"
@@ -74,27 +128,34 @@ export default function Genesis() {
                                         as="h3"
                                         className="text-lg font-medium leading-6 text-gray-900"
                                     >
-                                        Bitcoin is
+                                        {currentModalCategory === "btc" ? "Bitcoin is" : "$10 of Free Bitcoin"}
                                     </Dialog.Title>
                                     <div className="mt-2">
-                                        {getGenesisBlock()}
+                                        {currentModalCategory === "btc" ? getGenesisBlock() : getReferralBonus()}
                                     </div>
 
                                     <div className="mt-4">
                                         <button
                                             type="button"
-                                            onClick={closeModal}
+                                            onClick={currentModalCategory === "btc" ? closeDefinitionModal : () => { closeReferralModal(); navigateToSwan() }}
                                             className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                                         >
-                                            {"I'm beginning to understand..."}
+                                            {currentModalCategory === "btc" ? "I'm beginning to understand..." : "I accept"}
                                         </button>
+                                        {showReferral && <button
+                                            type="button"
+                                            onClick={closeReferralModal}
+                                            className="inline-flex justify-center rounded-md border border-transparent bg-gray-100 px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-500 focus-visible:ring-offset-2 ml-2"
+                                        >
+                                            {"I'm not ready to thrive"}
+                                        </button>}
                                     </div>
                                 </Dialog.Panel>
                             </Transition.Child>
                         </div>
                     </div>
                 </Dialog>
-            </Transition>
+            </Transition >
         </>
     )
 }
