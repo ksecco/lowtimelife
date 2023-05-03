@@ -1,19 +1,38 @@
+// styles not available after `npm run build` though classes are present in HTML,
+// integrating via Tailwind "dark" class styling rather than via AppContext for now...
+
 export const themes = {
   dark: {
-    primary: "black",
-    headerText: "white",
-    bodyText: "gray-300",
-    orange: "orange-500",
-    linkPrimary: "orange-500",
-    linkSecondary: "blue-100",
+    bg: {
+      button: "",
+      orange: "bg-orange-500",
+      primary: "bg-black",
+      toggle: "bg-white"
+    },
+    link: {
+      primary: "text-orange-500",
+      hover: "text-blue-100",
+    },
+    text: {
+      gray: "text-gray-300",
+      header: "text-white",
+    },
   },
   light: {
-    primary: "white",
-    headerText: "gray-900",
-    bodyText: "gray-500",
-    orange: "orange-200",
-    linkPrimary: "blue-900",
-    linkSecondary: "orange-500",
+    bg: {
+      button: "bg-gray-100",
+      orange: "bg-orange-200",
+      primary: "bg-white",
+      toggle: "bg-blue-900"
+    },
+    link: {
+      primary: "text-blue-900",
+      hover: "text-orange-500",
+    },
+    text: {
+      gray: "text-gray-500",
+      header: "text-gray-900",
+    },
   },
 };
 

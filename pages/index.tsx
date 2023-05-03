@@ -2,14 +2,19 @@ import Head from "next/head";
 import { Inter } from "next/font/google";
 import Genesis from "../components/genesis";
 import Header from "../components/header";
-import { useAppContext } from "@/contexts/appContext";
+// import { useAppContext } from "@/contexts/appContext";
+// import themes from "@/styles/themes";
 import styles from "@/styles/Home.module.css";
-import themes from "@/styles/themes";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
-  const { mode } = useAppContext();
+  // const { mode } = useAppContext();
+  // const { bg: primnary } = themes[mode as keyof typeof themes]
+
+  // object literals not available in production build despite full class names:
+  // https://tailwindcss.com/docs/content-configuration#dynamic-class-names
+  // incorporating via Next.js dark styling toggle rather than via AppContext
 
   return (
     <>
@@ -20,7 +25,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main
-        className={`${styles.main} ${inter.className} bg-${themes[mode as keyof typeof themes].primary}`}
+        className={`${styles.main} ${inter.className} bg-white dark:bg-black`}
       >
         <Header />
         <Genesis />
