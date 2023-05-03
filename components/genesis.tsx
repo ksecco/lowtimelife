@@ -1,5 +1,7 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
+import { useAppContext } from "@/contexts/appContext";
+import themes from "@/styles/themes";
 
 export default function Genesis() {
   const bitcoinIs: Array<string> = [
@@ -20,6 +22,9 @@ export default function Genesis() {
   const [didShowDefinition, setDidShowDefinitionModal] = useState(false);
   const [showReferral, setshowReferral] = useState(false);
   const [currentModalCategory, setCurrentModalCategory] = useState("btc");
+  const { mode } = useAppContext();
+  const { bodyText, headerText, linkPrimary, linkSecondary, orange, primary } =
+    themes[mode as keyof typeof themes];
 
   async function closeDefinitionModal() {
     setshowDefinition(false);
@@ -45,11 +50,15 @@ export default function Genesis() {
   }
 
   function getGenesisBlock() {
-    return bitcoinIs.map((premise, i) => (
-      <p key={i} className="text-md text-gray-500">
-        {premise}
-      </p>
-    ));
+    return (
+      <div className="pt-2 pb-2">
+        {bitcoinIs.map((premise, i) => (
+          <p key={i} className={`text-md text-${bodyText}`}>
+            {premise}
+          </p>
+        ))}
+      </div>
+    );
   }
 
   function getReferralBonus() {
@@ -73,16 +82,16 @@ export default function Genesis() {
         {referral.map((section, i) => (
           <div key={i} className="pt-2 pb-2">
             {section.map((line, j) => (
-              <p key={j} className="text-md text-gray-500">
+              <p key={j} className={`text-md text-${bodyText}`}>
                 {line}
               </p>
             ))}
           </div>
         ))}
-        <p className="text-md text-gray-500 pt-2 pb-2">
+        <p className={`text-md text-${bodyText} pt-2 pb-2`}>
           Enter your email at{" "}
           <a
-            className="font-medium text-blue-900 hover:text-orange-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+            className={`font-medium text-${linkPrimary} hover:text-${linkSecondary} focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2`}
             onClick={closeReferralModal}
             target="_blank"
             rel="noopener noreferrer"
@@ -97,14 +106,14 @@ export default function Genesis() {
 
   return (
     <>
-      <div className="fixed inset-0 flex items-center justify-center bg-white">
+      <div className="flex-1 flex items-center justify-center">
         <button
           type="button"
           onClick={openDefinitionModal}
           className={
             !didShowDefinition
               ? "inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-orange-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-              : "inline-flex justify-center rounded-md border border-transparent px-4 py-2 text-sm font-medium text-blue-900 hover:text-orange-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+              : `inline-flex justify-center rounded-md border border-transparent px-4 py-2 text-sm font-medium text-${linkPrimary} hover:text-${linkSecondary} focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2`
           }
         >
           What is Bitcoin?
@@ -131,7 +140,7 @@ export default function Genesis() {
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <div className="fixed inset-0 bg-orange-200" />
+            <div className={`fixed inset-0 bg-${orange}`} />
           </Transition.Child>
 
           <div className="fixed inset-0 overflow-y-auto">
@@ -145,10 +154,12 @@ export default function Genesis() {
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <Dialog.Panel className="transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+                <Dialog.Panel
+                  className={`transform overflow-hidden rounded-2xl bg-${primary} p-6 text-left align-middle shadow-xl transition-all`}
+                >
                   <Dialog.Title
                     as="h3"
-                    className="text-lg font-medium leading-6 text-gray-900"
+                    className={`text-lg font-medium leading-6 text-${headerText}`}
                   >
                     {currentModalCategory === "btc"
                       ? "Bitcoin is"
@@ -181,7 +192,13 @@ export default function Genesis() {
                       <button
                         type="button"
                         onClick={closeReferralModal}
-                        className="inline-flex justify-center rounded-md border border-transparent bg-gray-100 px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 ml-2"
+                        className={`inline-flex justify-center rounded-md border border-transparent bg-gray-${
+                          mode === "light" ? 100 : 0
+                        } px-4 py-2 text-sm font-medium text-gray-500 hover:${
+                          mode === "light"
+                            ? "bg-gray-200"
+                            : `text-${linkSecondary}`
+                        } focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 ml-2`}
                       >
                         Status quo says no
                       </button>
