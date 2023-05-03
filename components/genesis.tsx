@@ -13,7 +13,7 @@ export default function Genesis() {
     "Distributed amongst sovereign individuals",
     "Who by trustless transparent majority vote",
     "Are collectively incentivized to fortify the eternal anti-fragility",
-    "Of experience’s known least frictional foundational protocol",
+    "Of experience’s greatest known least frictional foundational protocol",
     "Designed to promote, produce, and preserve",
     "Abundance, Truth, and Love.",
   ];
