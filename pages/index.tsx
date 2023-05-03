@@ -1,7 +1,7 @@
 import Head from "next/head";
 import { Inter } from "next/font/google";
-import Genesis from "../components/genesis";
-import Header from "../components/header";
+import Genesis from "@/components/genesis";
+import Header from "@/components/header";
 // import { useAppContext } from "@/contexts/appContext";
 // import themes from "@/styles/themes";
 import styles from "@/styles/Home.module.css";
@@ -26,6 +26,7 @@ export default function Home() {
       </Head>
       <main
         className={`${styles.main} ${inter.className} bg-white dark:bg-black`}
+        style={{ padding: "1.5rem!important" }}
       >
         <Header />
         <Genesis />
