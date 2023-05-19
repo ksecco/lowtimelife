@@ -1,8 +1,10 @@
 import ToggleSwitch from "@/components/toggleSwitch";
+import Nav from "@/components/nav";
 
 export default function Header() {
   return (
-    <div className="w-full flex justify-end fixed top-12 right-12">
+    <div className="w-full flex justify-between fixed top-0 p-12">
+      <Nav />
       <ToggleSwitch />
     </div>
   );

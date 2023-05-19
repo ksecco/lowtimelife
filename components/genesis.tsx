@@ -1,6 +1,6 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
-// import { useAppContext } from "@/contexts/appContext";
+import { useAppContext } from "@/contexts/appContext";
 // import themes from "@/styles/themes";
 
 export default function Genesis() {
@@ -18,21 +18,20 @@ export default function Genesis() {
     "Abundance, Truth, and Love.",
   ];
 
-  const [showDefinition, setshowDefinition] = useState(false);
-  const [didShowDefinition, setDidShowDefinitionModal] = useState(false);
   const [showReferral, setshowReferral] = useState(false);
   const [currentModalCategory, setCurrentModalCategory] = useState("btc");
-  // const { mode } = useAppContext();
+  const { didDefine, setDidDefine, showDefinition, setShowDefinition } =
+    useAppContext();
   // const { bg, link, text } = themes[mode as keyof typeof themes];
 
   async function closeDefinitionModal() {
-    setshowDefinition(false);
-    setDidShowDefinitionModal(true);
+    setShowDefinition(false);
+    setDidDefine(true);
   }
 
   function openDefinitionModal() {
     setCurrentModalCategory("btc");
-    setshowDefinition(true);
+    setShowDefinition(true);
   }
 
   function closeReferralModal() {
@@ -110,14 +109,14 @@ export default function Genesis() {
           type="button"
           onClick={openDefinitionModal}
           className={
-            !didShowDefinition
+            !didDefine
               ? "inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-orange-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
               : `inline-flex justify-center rounded-md border border-transparent px-4 py-2 text-sm font-medium text-blue-900 dark:text-orange-200 hover:text-orange-500 hover:dark:text-blue-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2`
           }
         >
           What is Bitcoin?
         </button>
-        {didShowDefinition && (
+        {didDefine && (
           <button
             type="button"
             onClick={openReferralModal}
@@ -161,7 +160,7 @@ export default function Genesis() {
                     className={`text-lg font-medium leading-6 text-gray-900 dark:text-white`}
                   >
                     {currentModalCategory === "btc"
-                      ? "Bitcoin is"
+                      ? "Bitcoin is..."
                       : "$10 of Free Bitcoin"}
                   </Dialog.Title>
                   <div className="mt-2">

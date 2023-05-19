@@ -2,6 +2,7 @@ import Head from "next/head";
 import { Inter } from "next/font/google";
 import Genesis from "@/components/genesis";
 import Header from "@/components/header";
+import Nav from "@/components/nav";
 // import { useAppContext } from "@/contexts/appContext";
 // import themes from "@/styles/themes";
 import styles from "@/styles/Home.module.css";
