@@ -19,10 +19,12 @@ export default function Nav() {
     setShowDefinition(true);
   }
 
-  function getButtonClassName(active: boolean) {
+  function getButtonClassName(active: boolean, disabled: boolean = false) {
     return `${
       active ? "bg-orange-200 text-blue-900" : "text-gray-900"
-    } group flex w-full items-center rounded-md px-2 py-2 text-sm`;
+    } group flex w-full items-center rounded-md px-2 py-2 text-sm ${
+      disabled && "opacity-75"
+    }`;
   }
 
   return (
@@ -73,7 +75,7 @@ export default function Nav() {
             <div className="px-1 py-1">
               <Menu.Item disabled>
                 {({ active }) => (
-                  <button className={getButtonClassName(active)}>
+                  <button className={getButtonClassName(active, true)}>
                     <BookOpenIcon className={iconClassName} />
                     Low Time Library
                   </button>
@@ -81,7 +83,7 @@ export default function Nav() {
               </Menu.Item>
               <Menu.Item disabled>
                 {({ active }) => (
-                  <button className={getButtonClassName(active)}>
+                  <button className={getButtonClassName(active, true)}>
                     <CalculatorIcon className={iconClassName} />
                     Low Time Calculator
                   </button>
