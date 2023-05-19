@@ -23,7 +23,7 @@ export default function Nav() {
     return `${
       active ? "bg-orange-200 text-blue-900" : "text-gray-900"
     } group flex w-full items-center rounded-md px-2 py-2 text-sm ${
-      disabled && "opacity-75"
+      disabled && "opacity-50"
     }`;
   }
 
