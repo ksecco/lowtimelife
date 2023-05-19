@@ -18,8 +18,8 @@ export default function Genesis() {
     "Abundance, Truth, and Love.",
   ];
 
-  const [showReferral, setshowReferral] = useState(false);
-  const [currentModalCategory, setCurrentModalCategory] = useState("btc");
+  const [showReferral, setShowReferral] = useState(false);
+  const [currentModalType, setCurrentModalType] = useState("btc");
   const { didDefine, setDidDefine, showDefinition, setShowDefinition } =
     useAppContext();
   // const { bg, link, text } = themes[mode as keyof typeof themes];
@@ -30,17 +30,19 @@ export default function Genesis() {
   }
 
   function openDefinitionModal() {
-    setCurrentModalCategory("btc");
+    setCurrentModalType("btc");
     setShowDefinition(true);
   }
 
   function closeReferralModal() {
-    setshowReferral(false);
+    setShowReferral(false);
+    // allow for transition before switching modal types
+    new Promise(() => setTimeout(() => setCurrentModalType("btc"), 200));
   }
 
   function openReferralModal() {
-    setCurrentModalCategory("swan");
-    setshowReferral(true);
+    setCurrentModalType("swan");
+    setShowReferral(true);
   }
 
   function navigateToSwan() {
@@ -159,12 +161,12 @@ export default function Genesis() {
                     as="h3"
                     className={`text-lg font-medium leading-6 text-gray-900 dark:text-white`}
                   >
-                    {currentModalCategory === "btc"
+                    {currentModalType === "btc"
                       ? "Bitcoin is..."
                       : "$10 of Free Bitcoin"}
                   </Dialog.Title>
                   <div className="mt-2">
-                    {currentModalCategory === "btc"
+                    {currentModalType === "btc"
                       ? getGenesisBlock()
                       : getReferralBonus()}
                   </div>
@@ -173,7 +175,7 @@ export default function Genesis() {
                     <button
                       type="button"
                       onClick={
-                        currentModalCategory === "btc"
+                        currentModalType === "btc"
                           ? closeDefinitionModal
                           : () => {
                               closeReferralModal();
@@ -182,11 +184,11 @@ export default function Genesis() {
                       }
                       className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 hover:dark:bg-orange-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                     >
-                      {currentModalCategory === "btc"
+                      {currentModalType === "btc"
                         ? "I'm beginning to understand..."
                         : "I accept"}
                     </button>
-                    {currentModalCategory === "swan" && (
+                    {currentModalType === "swan" && (
                       <button
                         type="button"
                         onClick={closeReferralModal}
